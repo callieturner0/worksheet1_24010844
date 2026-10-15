@@ -89,7 +89,7 @@ The program was assembled, compiled, and executed successfully.
 - Expected result: 30
 - Actual result: 30
 
-![Task 1.2 running](task1_2.png)
+![Task 1_2 running](task1_2.png)
 
 ---
 
@@ -161,6 +161,59 @@ Above the allowed range	100	Displays an error message
 
 ![Task 2 valid input](task2_correct.png)
 ![Task 2 invalid input](task2_incorrect.png)
+
+Task 2.2 – Creating an Array and Calculating Its Sum
+Aim
+
+The aim of this program is to create an array containing 100 integers, fill it with the numbers 1 to 100, and calculate the sum of all the elements. The final result is printed to the terminal.
+
+How the Program Works
+
+1. Creating the array
+
+The program reserves memory for 100 integers using resd. Each integer occupies four bytes.
+
+numbers resd 100
+
+The program also uses a counter to keep track of the current array position and a variable called total to store the sum.
+
+2. Initialising the array
+
+The program starts the counter at zero and uses a loop to fill the array with numbers from 1 to 100.
+
+mov eax, [counter]
+inc eax
+
+mov ebx, [counter]
+mov [numbers + ebx*4], eax
+
+The counter represents the array index, starting at zero. The program adds one to the counter value to generate the number stored at that position. Multiplying the index by four calculates the correct memory offset for each integer.
+
+3. Calculating the sum
+
+After filling the array, the counter is reset to zero. A second loop reads each element and adds it to total.
+
+mov ebx, [counter]
+mov eax, [numbers + ebx*4]
+add [total], eax
+
+The loop continues until all 100 elements have been added together.
+
+4. Displaying the result
+
+Once the calculation is complete, the program prints the total using print_int, followed by a newline.
+
+mov eax, [total]
+call print_int
+call print_nl
+Testing
+
+The program was assembled using NASM, linked using GCC, and executed in the terminal.
+
+Test	Expected output
+Sum of integers from 1 to 100	5050
+
+![Task 2_2 running](task2_2.png)
 
 
 ## Files
