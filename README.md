@@ -1,12 +1,21 @@
-# worksheet1_24010844
 # Operating Systems Worksheet 1
+## Assembly Programming
+
+This repository contains the programs completed for Operating Systems Worksheet 1. The programs use Assembly language to perform calculations, handle user input, work with arrays and automate compilation using a Makefile.
+
+---
 
 ## Task 1.1 – Adding Two Integers
 
-### Code Example
+### Aim
 
-The following instructions load the first integer into the EAX register,
-add the second integer, and store the result in memory.
+The aim of this program is to add two integers stored in memory and display the result.
+
+### How the Program Works
+
+The program stores two integers, 15 and 6, in the `.data` section. It loads the first integer into the EAX register, adds the second integer and stores the result in memory.
+
+### Code Example
 
 ```asm
 mov eax, [integer1]
@@ -14,32 +23,23 @@ add eax, [integer2]
 mov [result], eax
 ```
 
-The `mov` instruction loads or stores values, while `add` performs the
-addition. The result is stored in the `result` variable before it is
-printed.
-
-### Description
-This program uses Assembly language to add two integers stored in memory.
-The first integer is 15 and the second integer is 6. The program loads
-the first integer into the EAX register, adds the second integer, and
-stores the result in memory before displaying it.
+The `mov` instruction moves values between registers and memory. The `add` instruction adds the two integers together, and the result is stored in the `result` variable.
 
 ### Implementation
+
 - The `.data` section stores the two integers.
 - The `.bss` section reserves memory for the result.
 - The `.text` section contains the program instructions.
-- The program uses `mov` to load and store values and `add` to calculate
-  the sum.
-- The result is displayed using `print_int`.
+- The EAX register is used to perform the addition.
+- `print_int` displays the result, and `print_nl` moves the output to a new line.
 
 ### Testing
-The program was assembled, compiled, and executed successfully.
 
-**Test values:**
-- First integer: 15
-- Second integer: 6
-- Expected result: 21
-- Actual result: 21
+The program was assembled, compiled and run in the terminal. The output was checked against the expected result.
+
+| Test | First integer | Second integer | Expected output | Actual output | Result |
+|---|---:|---:|---:|---:|---|
+| Add two integers | 15 | 6 | 21 | 21 | Pass |
 
 ![Task 1.1 running](task1.png)
 
@@ -47,9 +47,15 @@ The program was assembled, compiled, and executed successfully.
 
 ## Task 1.2 – Adding Two User-Entered Integers
 
-### Code Example
+### Aim
 
-The program reads two integers, stores them in memory, and adds them.
+The aim of this program is to ask the user to enter two integers, add them together and display the result.
+
+### How the Program Works
+
+The program asks the user to enter two integers. It stores each number in memory before adding them together. The result is then displayed in the terminal.
+
+### Code Example
 
 ```asm
 call read_int
@@ -63,233 +69,292 @@ add eax, [integer2]
 mov [result], eax
 ```
 
-The `read_int` routine accepts an integer from the user. Each value is
-stored in memory, and the `add` instruction calculates the sum.
-
-### Description
-This program asks the user to enter two integers, adds them together,
-and displays the calculation and the sum.
+The `read_int` routine reads an integer entered by the user. The values are stored in memory, and `add` calculates their sum.
 
 ### Implementation
+
 - The `.data` section stores the messages displayed to the user.
-- The `.bss` section reserves memory for the two integers and their sum.
+- The `.bss` section reserves memory for the integers and their result.
 - `read_int` accepts the user's input.
 - `mov` stores the input values in memory.
 - `add` calculates the sum.
 - `print_string` displays messages.
-- `print_int` displays the numbers and the result.
+- `print_int` displays the numbers and result.
 - `print_nl` moves the output to a new line.
 
 ### Testing
-The program was assembled, compiled, and executed successfully.
 
-**Test values:**
-- First integer: 10
-- Second integer: 20
-- Expected result: 30
-- Actual result: 30
+The program was assembled, compiled and run in the terminal. Two integers were entered to check that the program calculated the correct sum.
 
-![Task 1_2 running](task1_2.png)
+| Test | First integer | Second integer | Expected output | Actual output | Result |
+|---|---:|---:|---:|---:|---|
+| Add user-entered integers | 10 | 20 | 30 | 30 | Pass |
+
+![Task 1.2 running](task1_2.png)
 
 ---
 
-Task 2.1 – Personalised Welcome Message
-Aim
+## Task 2.1 – Personalised Welcome Message
+
+### Aim
 
 The aim of this program is to ask the user for their name and how many times they want a welcome message to be displayed. The program checks that the number entered is greater than 50 and less than 100. If the number is outside this range, an error message is displayed.
 
-How the Program Works
+### How the Program Works
 
-1. Asking for the user's name
+**1. Asking for the user's name**
 
-The program uses print_string to display a prompt asking for the user's name. It then uses read_char to read the name one character at a time and stores each character in memory.
+The program displays a message asking for the user's name. It then uses `read_char` to read the name one character at a time and stores the characters in memory.
 
+```asm
 mov eax, name_msg
 call print_string
 
 mov edi, user_name
 mov ecx, 99
+```
 
-The EDI register points to the location where the name is stored, and ECX limits the number of characters read. The program stops reading when the user presses Enter or the character limit is reached.
+The EDI register points to the memory location where the name is stored. ECX is used to limit the number of characters read. The program stops reading when the user presses Enter or the character limit is reached.
 
-2. Asking for the number
+**2. Asking for the number**
 
-The program asks the user how many times the welcome message should be displayed. It uses read_int to accept an integer and stores the result in user_number.
+The program asks the user how many times the welcome message should be displayed. It uses `read_int` to read the number and stores it in `user_number`.
 
+```asm
 mov eax, number_msg
 call print_string
 call read_int
 mov [user_number], eax
+```
 
-3. Validating the number
+**3. Checking the input**
 
-The program checks whether the number is within the required range. The number must be greater than 50 and less than 100.
+The number must be greater than 50 and less than 100. The program checks the value and displays an error message if it is 50 or below, or 100 or above.
 
+```asm
 cmp eax, 50
 jle show_error
 
 cmp eax, 100
 jge show_error
+```
 
-The cmp instructions compare the number against the limits. The conditional jumps send the program to the error message if the number is 50 or below, or 100 or above.
+The `cmp` instruction compares the number with the limits. The conditional jumps send the program to the error message when the input is invalid.
 
-4. Printing the welcome message
+**4. Displaying the welcome message**
 
-If the number is valid, the program starts a counter at zero and enters a loop.
+If the number is valid, the program uses a loop to display a personalised welcome message the requested number of times.
 
-mov dword [counter], 0
-
-Each time the loop runs, the program prints Welcome, followed by the user's name. The counter increases by one after each message. The loop continues until the counter reaches the number entered by the user.
-
+```asm
 inc dword [counter]
 
 mov eax, [counter]
 cmp eax, [user_number]
 jl welcome_loop
+```
 
-This ensures that the welcome message is displayed the requested number of times.
+The counter increases after each message. The loop continues until the counter reaches the number entered by the user.
 
-Testing
+### Implementation
 
-The program was assembled and linked successfully using NASM and GCC. It was then run from the terminal to check its behaviour.
+- `print_string` displays the prompts and messages.
+- `read_char` reads the user's name.
+- `read_int` reads the number of messages.
+- The EDI register points to the memory used to store the name.
+- The counter keeps track of how many messages have been displayed.
+- Conditional jumps check whether the input is valid.
+- A loop displays the welcome message the required number of times.
 
-Test	Input	Expected result
-Valid lower limit	51	Prints the welcome message 51 times
-Valid upper limit	99	Prints the welcome message 99 times
-Below the allowed range	50	Displays an error message
-Above the allowed range	100	Displays an error message
+### Testing
 
-![Task 2 valid input](task2_correct.png)
-![Task 2 invalid input](task2_incorrect.png)
+The program was assembled using NASM, linked using GCC and run in the terminal. Different inputs were used to check that the program accepted valid numbers and rejected invalid ones.
 
-Task 2.2 – Creating an Array and Calculating Its Sum
-Aim
+| Test | Input | Expected result | Actual result | Result |
+|---|---:|---|---|---|
+| Valid lower limit | 51 | Display the welcome message 51 times | Welcome message displayed 51 times | Pass |
+| Valid upper limit | 99 | Display the welcome message 99 times | Welcome message displayed 99 times | Pass |
+| Below the allowed range | 50 | Display an error message | Error message displayed | Pass |
+| Above the allowed range | 100 | Display an error message | Error message displayed | Pass |
 
-The aim of this program is to create an array containing 100 integers, fill it with the numbers 1 to 100, and calculate the sum of all the elements. The final result is printed to the terminal.
+![Task 2.1 valid input](task2_correct.png)
 
-How the Program Works
+![Task 2.1 invalid input](task2_incorrect.png)
 
-1. Creating the array
+---
 
-The program reserves memory for 100 integers using resd. Each integer occupies four bytes.
+## Task 2.2 – Creating an Array and Calculating Its Sum
 
+### Aim
+
+The aim of this program is to create an array containing 100 integers, fill it with the numbers 1 to 100 and calculate their total. The final result is displayed in the terminal.
+
+### How the Program Works
+
+**1. Creating the array**
+
+The program reserves memory for 100 integers using `resd`. Each integer takes up four bytes.
+
+```asm
 numbers resd 100
+```
 
-The program also uses a counter to keep track of the current array position and a variable called total to store the sum.
+The program also uses a counter to keep track of the current array position and a variable called `total` to store the sum.
 
-2. Initialising the array
+**2. Filling the array**
 
-The program starts the counter at zero and uses a loop to fill the array with numbers from 1 to 100.
+The program uses a loop to fill the array with the numbers 1 to 100.
 
+```asm
 mov eax, [counter]
 inc eax
 
 mov ebx, [counter]
 mov [numbers + ebx*4], eax
+```
 
-The counter represents the array index, starting at zero. The program adds one to the counter value to generate the number stored at that position. Multiplying the index by four calculates the correct memory offset for each integer.
+The counter starts at zero, so the program adds one to it to generate the number to store. The array index is multiplied by four to calculate the memory location of each integer.
 
-3. Calculating the sum
+**3. Calculating the sum**
 
-After filling the array, the counter is reset to zero. A second loop reads each element and adds it to total.
+After filling the array, the counter is reset to zero. A second loop reads each element and adds it to `total`.
 
+```asm
 mov ebx, [counter]
 mov eax, [numbers + ebx*4]
 add [total], eax
+```
 
 The loop continues until all 100 elements have been added together.
 
-4. Displaying the result
+**4. Displaying the result**
 
-Once the calculation is complete, the program prints the total using print_int, followed by a newline.
+Once the calculation is complete, the program displays the total using `print_int`.
 
+```asm
 mov eax, [total]
 call print_int
 call print_nl
-Testing
+```
 
-The program was assembled using NASM, linked using GCC, and executed in the terminal.
+### Implementation
 
-Test	Expected output
-Sum of integers from 1 to 100	5050
+- `resd 100` reserves memory for the 100 integers.
+- The counter keeps track of the current array position.
+- A loop fills the array with numbers from 1 to 100.
+- A second loop adds each array element to `total`.
+- The program uses `print_int` to display the final sum.
 
-![Task 2_2 running](task2_2.png)
+### Testing
 
-Task 2.3 – Calculating the Sum of a User-Selected Range
-Aim
+The program was assembled using NASM, linked using GCC and run in the terminal. The output was checked to make sure that the sum of all the integers was correct.
 
-The aim of this program is to extend Task 2.2 by allowing the user to choose a starting and ending number. The program calculates the sum of all the numbers within the selected range, provided the range is valid.
+| Test | Expected output | Actual output | Result |
+|---|---:|---:|---|
+| Sum of integers from 1 to 100 | 5050 | 5050 | Pass |
 
-How the Program Works
+![Task 2.2 running](task2_2.png)
 
-1. Creating and filling the array
+---
 
-The program reserves space for 100 integers and fills the array with the numbers 1 to 100, using a loop similar to the one in Task 2.2.
+## Task 2.3 – Calculating the Sum of a User-Selected Range
 
+### Aim
+
+The aim of this program is to extend Task 2.2 by allowing the user to choose a starting number and an ending number. The program calculates the sum of the numbers within the selected range, including both endpoints.
+
+### How the Program Works
+
+**1. Creating and filling the array**
+
+The program reserves memory for 100 integers and fills the array with the numbers 1 to 100, using a similar loop to Task 2.2.
+
+```asm
 numbers resd 100
+```
 
-Each element occupies four bytes, allowing the program to access each number using its array index.
+Each integer occupies four bytes, allowing the program to access the values using their array positions.
 
-2. Asking the user for a range
+**2. Asking the user for a range**
 
-The program asks the user to enter a starting number and an ending number. It uses read_int to collect both values and stores them in start_num and end_num.
+The program asks the user to enter a starting number and an ending number. It uses `read_int` to collect both values and stores them in `start_num` and `end_num`.
 
+```asm
 mov eax, start_msg
 call print_string
 call read_int
 mov [start_num], eax
+```
 
-3. Validating the range
+**3. Checking the range**
 
 The program checks that both numbers are between 1 and 100. It also checks that the starting number is not greater than the ending number.
 
+```asm
 mov eax, [start_num]
 cmp eax, 1
 jl show_error
 cmp eax, 100
 jg show_error
+```
 
 If the range is invalid, the program displays an error message instead of calculating the sum.
 
-4. Calculating the sum
+**4. Calculating the sum**
 
-The program converts the starting number into a zero-based array index by subtracting one. It then uses a loop to add each element within the selected range to total.
+The program converts the starting number into a zero-based array index by subtracting one. It then uses a loop to add the numbers within the selected range.
 
+```asm
 mov eax, [start_num]
 dec eax
 mov [counter], eax
+```
 
-The loop continues until all numbers in the selected range, including the ending number, have been added.
+The loop continues until all the numbers in the selected range have been added, including the ending number.
 
-5. Displaying the result
+**5. Displaying the result**
 
-After calculating the sum, the program displays the result using print_int.
+After calculating the sum, the program displays the result using `print_int`.
 
 For example, if the user enters 1 as the starting number and 5 as the ending number, the result is 15.
 
-Testing
+### Implementation
 
-The program was assembled using NASM, linked using GCC and tested in the terminal.
+- The array stores the numbers from 1 to 100.
+- `read_int` accepts the starting and ending numbers.
+- The values are stored in `start_num` and `end_num`.
+- Conditional jumps check whether the range is valid.
+- The counter tracks the current array position.
+- A loop adds the numbers within the selected range.
+- `print_int` displays the final sum.
 
-Test	Starting number	Ending number	Expected result
-Small range	1	5	15
-Single number	10	10	10
-Full range	1	100	5050
-Invalid starting number	0	5	Error message
-Invalid ending number	5	101	Error message
-Reversed range	10	5	Error message
+### Testing
 
-![Task 2_3 running](task2_3.png)
+The program was assembled using NASM, linked using GCC and tested in the terminal. Different ranges were entered to check that the program calculated the correct sums and rejected invalid ranges.
+
+| Test | Starting number | Ending number | Expected result | Actual result | Result |
+|---|---:|---:|---|---|---|
+| Small range | 1 | 5 | 15 | 15 | Pass |
+| Single number | 10 | 10 | 10 | 10 | Pass |
+| Full range | 1 | 100 | 5050 | 5050 | Pass |
+| Invalid starting number | 0 | 5 | Error message | Error message displayed | Pass |
+| Invalid ending number | 5 | 101 | Error message | Error message displayed | Pass |
+| Reversed range | 10 | 5 | Error message | Error message displayed | Pass |
+
+![Task 2.3 running](task2_3.png)
+
+---
 
 ## Task 3 – Makefile
 
-A Makefile was created to automate the assembly, compilation and linking of all five programs. This makes it easier to build the programs without having to enter each command separately in the terminal.
+### Aim
+
+The aim of this task is to create a Makefile that automates the assembly, compilation and linking of all five programs. This means the programs can be built using one command instead of entering each command separately.
+
+### How the Makefile Works
 
 The Makefile uses NASM to assemble the Assembly source files and GCC to compile the C driver and link the object files into executable programs. The source files are stored in the `src` directory.
 
-### Building the Programs
-
-The `all` target is used to build all five executable programs:
+The `all` target builds the five programs:
 
 - `task1`
 - `task1_2`
@@ -297,7 +362,29 @@ The `all` target is used to build all five executable programs:
 - `task2_2`
 - `task2_3`
 
-The Makefile was tested by running the `make` command from the project root directory. All five programs were built successfully. The terminal output showed the assembly and linking commands being executed.
+The `clean` target removes the generated object files and executable programs while keeping the original source files.
+
+### Implementation
+
+- `NASM` defines the assembler used to assemble the programs.
+- `GCC` defines the compiler and linker.
+- `SRC` specifies the location of the source files.
+- The individual targets assemble and link each program.
+- The `all` target builds all five executables.
+- The `clean` target removes the generated object files and executables.
+- The `make` command runs the default `all` target.
+
+### Testing
+
+The Makefile was tested by running `make` from the project root directory. All five programs were built successfully. Each executable was then run to check that it worked as expected.
+
+| Test | Command | Expected result | Actual result | Result |
+|---|---|---|---|---|
+| Build all programs | `make` | All five programs are built | All five programs built successfully | Pass |
+| Remove generated files | `make clean` | Object files and executables are removed | Generated files removed | Pass |
+| Rebuild programs | `make` | All five programs are built again | All five programs rebuilt successfully | Pass |
+
+### Makefile and Build Output
 
 The following screenshots show the Makefile and the output from building the programs.
 
@@ -305,36 +392,40 @@ The following screenshots show the Makefile and the output from building the pro
 
 ![Makefile build output](task3_ss2.png)
 
-The `make` command can be used to build all the programs:
-
-    make
-
 ### Cleaning Generated Files
 
-A `clean` target was also created to remove generated object files and executable programs. This allows the programs to be rebuilt without keeping the previous build files.
-
-The `make clean` command was tested to check that it removed the generated files while leaving the original Assembly source files and documentation intact.
+The `make clean` command removes the generated object files and executable programs. This allows the programs to be rebuilt without keeping the previous build files.
 
 ![Make clean command](task3_makeclean.png)
 
-The command used to clean the generated files was:
+### Rebuilding the Programs
 
-    make clean
-
-### Testing the Makefile
-
-The Makefile was tested by running `make` to build the programs, followed by `make clean` to remove the generated files. The `make` command was then run again to confirm that all five programs could be rebuilt successfully.
-
-The Makefile successfully built all five programs, and each executable was run to check that it worked as expected.
-
-The screenshots below provide additional evidence of the Makefile commands and their output.
+After running `make clean`, the `make` command was run again to check that all five programs could be rebuilt successfully from the source files.
 
 ![Make command testing](task3_make.png)
 
+The commands used to build and clean the programs are:
+
+```bash
+make
+make clean
+```
+
+---
+
 ## Files
 
-- `src/task1.asm` – Assembly program for Task 1.1.
-- `src/task1_2.asm` – Assembly program for Task 1.2.
-- `src/driver.c` – C driver used to run the Assembly programs.
-- `src/asm_io.asm` – Assembly input/output routines.
-- `src/asm_io.inc` – Assembly input/output definitions.
+The repository contains the following main files:
+
+| File | Description |
+|---|---|
+| `Makefile` | Automates building and cleaning the programs |
+| `README.md` | Documents the tasks, implementation and testing |
+| `src/task1.asm` | Adds two integers stored in memory |
+| `src/task1_2.asm` | Adds two integers entered by the user |
+| `src/task2.asm` | Displays a personalised welcome message a specified number of times |
+| `src/task2_2.asm` | Creates an array of 100 integers and calculates their sum |
+| `src/task2_3.asm` | Calculates the sum of a user-selected range |
+| `src/driver.c` | C driver used to run the Assembly programs |
+| `src/asm_io.asm` | Contains the Assembly input/output routines |
+| `src/asm_io.inc` | Contains the definitions used by the input/output routines |
