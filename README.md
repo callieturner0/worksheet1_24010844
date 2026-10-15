@@ -301,9 +301,9 @@ The Makefile was tested by running the `make` command from the project root dire
 
 The following screenshots show the Makefile and the output from building the programs.
 
-![Makefile configuration](screenshots/task3_ss1.png)
+![Makefile configuration](task3_ss1.png)
 
-![Makefile build output](screenshots/task3_ss2.png)
+![Makefile build output](task3_ss2.png)
 
 The `make` command can be used to build all the programs:
 
@@ -315,7 +315,7 @@ A `clean` target was also created to remove generated object files and executabl
 
 The `make clean` command was tested to check that it removed the generated files while leaving the original Assembly source files and documentation intact.
 
-![Make clean command](screenshots/task3_makeclean.png)
+![Make clean command](task3_makeclean.png)
 
 The command used to clean the generated files was:
 
@@ -329,7 +329,7 @@ The Makefile successfully built all five programs, and each executable was run t
 
 The screenshots below provide additional evidence of the Makefile commands and their output.
 
-![Make command testing](screenshots/task3_make.png)
+![Make command testing](task3_make.png)
 
 ## Files
 
