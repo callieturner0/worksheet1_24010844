@@ -215,6 +215,73 @@ Sum of integers from 1 to 100	5050
 
 ![Task 2_2 running](task2_2.png)
 
+Task 2.3 – Calculating the Sum of a User-Selected Range
+Aim
+
+The aim of this program is to extend Task 2.2 by allowing the user to choose a starting and ending number. The program calculates the sum of all the numbers within the selected range, provided the range is valid.
+
+How the Program Works
+
+1. Creating and filling the array
+
+The program reserves space for 100 integers and fills the array with the numbers 1 to 100, using a loop similar to the one in Task 2.2.
+
+numbers resd 100
+
+Each element occupies four bytes, allowing the program to access each number using its array index.
+
+2. Asking the user for a range
+
+The program asks the user to enter a starting number and an ending number. It uses read_int to collect both values and stores them in start_num and end_num.
+
+mov eax, start_msg
+call print_string
+call read_int
+mov [start_num], eax
+
+3. Validating the range
+
+The program checks that both numbers are between 1 and 100. It also checks that the starting number is not greater than the ending number.
+
+mov eax, [start_num]
+cmp eax, 1
+jl show_error
+cmp eax, 100
+jg show_error
+
+If the range is invalid, the program displays an error message instead of calculating the sum.
+
+4. Calculating the sum
+
+The program converts the starting number into a zero-based array index by subtracting one. It then uses a loop to add each element within the selected range to total.
+
+mov eax, [start_num]
+dec eax
+mov [counter], eax
+
+The loop continues until all numbers in the selected range, including the ending number, have been added.
+
+5. Displaying the result
+
+After calculating the sum, the program displays the result using print_int.
+
+For example, if the user enters 1 as the starting number and 5 as the ending number, the result is 15.
+
+Testing
+
+The program was assembled using NASM, linked using GCC and tested in the terminal.
+
+Test	Starting number	Ending number	Expected result
+Small range	1	5	15
+Single number	10	10	10
+Full range	1	100	5050
+Invalid starting number	0	5	Error message
+Invalid ending number	5	101	Error message
+Reversed range	10	5	Error message
+
+![Task 2_3 running](task2_3.png)
+
+
 
 ## Files
 
