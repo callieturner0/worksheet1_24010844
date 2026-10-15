@@ -281,7 +281,35 @@ Reversed range	10	5	Error message
 
 ![Task 2_3 running](task2_3.png)
 
+## Task 3 – Makefile
 
+A Makefile was created to automate the building of all five Assembly programs. This means the programs can be compiled and linked using one command instead of entering each command separately.
+
+The Makefile uses NASM to assemble the Assembly source files and GCC to compile the C driver and link the object files into executable programs.
+
+The `all` target builds all five programs:
+- `task1`
+- `task1_2`
+- `task2`
+- `task2_2`
+- `task2_3`
+
+The `clean` target removes the generated object files and executable programs.
+
+### Testing
+
+The Makefile was tested by running `make` from the project root directory. All five executable programs were built successfully. Each executable was then run to check that the programs worked as expected.
+
+To build all programs, run:
+
+    make
+
+To remove the generated files, run:
+
+    make clean
+
+![Task3_ss1 running](task3_ss1.png)
+![Task3_ss1 running](task3_ss1.png)
 
 ## Files
 
