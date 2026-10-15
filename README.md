@@ -3,6 +3,21 @@
 
 ## Task 1.1 – Adding Two Integers
 
+### Code Example
+
+The following instructions load the first integer into the EAX register,
+add the second integer, and store the result in memory.
+
+```asm
+mov eax, [integer1]
+add eax, [integer2]
+mov [result], eax
+```
+
+The `mov` instruction loads or stores values, while `add` performs the
+addition. The result is stored in the `result` variable before it is
+printed.
+
 ### Description
 This program uses Assembly language to add two integers stored in memory.
 The first integer is 15 and the second integer is 6. The program loads
@@ -26,9 +41,30 @@ The program was assembled, compiled, and executed successfully.
 - Expected result: 21
 - Actual result: 21
 
+![Task 1.1 running](task1.png)
+
 ---
 
 ## Task 1.2 – Adding Two User-Entered Integers
+
+### Code Example
+
+The program reads two integers, stores them in memory, and adds them.
+
+```asm
+call read_int
+mov [integer1], eax
+
+call read_int
+mov [integer2], eax
+
+mov eax, [integer1]
+add eax, [integer2]
+mov [result], eax
+```
+
+The `read_int` routine accepts an integer from the user. Each value is
+stored in memory, and the `add` instruction calculates the sum.
 
 ### Description
 This program asks the user to enter two integers, adds them together,
@@ -52,6 +88,8 @@ The program was assembled, compiled, and executed successfully.
 - Second integer: 20
 - Expected result: 30
 - Actual result: 30
+
+![Task 1.2 running](task1_2.png)
 
 ---
 
