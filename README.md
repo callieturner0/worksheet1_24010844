@@ -283,33 +283,53 @@ Reversed range	10	5	Error message
 
 ## Task 3 – Makefile
 
-A Makefile was created to automate the building of all five Assembly programs. This means the programs can be compiled and linked using one command instead of entering each command separately.
+A Makefile was created to automate the assembly, compilation and linking of all five programs. This makes it easier to build the programs without having to enter each command separately in the terminal.
 
-The Makefile uses NASM to assemble the Assembly source files and GCC to compile the C driver and link the object files into executable programs.
+The Makefile uses NASM to assemble the Assembly source files and GCC to compile the C driver and link the object files into executable programs. The source files are stored in the `src` directory.
 
-The `all` target builds all five programs:
+### Building the Programs
+
+The `all` target is used to build all five executable programs:
+
 - `task1`
 - `task1_2`
 - `task2`
 - `task2_2`
 - `task2_3`
 
-The `clean` target removes the generated object files and executable programs.
+The Makefile was tested by running the `make` command from the project root directory. All five programs were built successfully. The terminal output showed the assembly and linking commands being executed.
 
-### Testing
+The following screenshots show the Makefile and the output from building the programs.
 
-The Makefile was tested by running `make` from the project root directory. All five executable programs were built successfully. Each executable was then run to check that the programs worked as expected.
+![Makefile configuration](screenshots/task3_ss1.png)
 
-To build all programs, run:
+![Makefile build output](screenshots/task3_ss2.png)
+
+The `make` command can be used to build all the programs:
 
     make
 
-To remove the generated files, run:
+### Cleaning Generated Files
+
+A `clean` target was also created to remove generated object files and executable programs. This allows the programs to be rebuilt without keeping the previous build files.
+
+The `make clean` command was tested to check that it removed the generated files while leaving the original Assembly source files and documentation intact.
+
+![Make clean command](screenshots/task3_makeclean.png)
+
+The command used to clean the generated files was:
 
     make clean
 
-![Task3_ss1 running](task3_ss1.png)
-![Task3_ss1 running](task3_ss1.png)
+### Testing the Makefile
+
+The Makefile was tested by running `make` to build the programs, followed by `make clean` to remove the generated files. The `make` command was then run again to confirm that all five programs could be rebuilt successfully.
+
+The Makefile successfully built all five programs, and each executable was run to check that it worked as expected.
+
+The screenshots below provide additional evidence of the Makefile commands and their output.
+
+![Make command testing](screenshots/task3_make.png)
 
 ## Files
 
