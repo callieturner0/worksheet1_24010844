@@ -93,6 +93,76 @@ The program was assembled, compiled, and executed successfully.
 
 ---
 
+Task 2.1 – Personalised Welcome Message
+Aim
+
+The aim of this program is to ask the user for their name and how many times they want a welcome message to be displayed. The program checks that the number entered is greater than 50 and less than 100. If the number is outside this range, an error message is displayed.
+
+How the Program Works
+
+1. Asking for the user's name
+
+The program uses print_string to display a prompt asking for the user's name. It then uses read_char to read the name one character at a time and stores each character in memory.
+
+mov eax, name_msg
+call print_string
+
+mov edi, user_name
+mov ecx, 99
+
+The EDI register points to the location where the name is stored, and ECX limits the number of characters read. The program stops reading when the user presses Enter or the character limit is reached.
+
+2. Asking for the number
+
+The program asks the user how many times the welcome message should be displayed. It uses read_int to accept an integer and stores the result in user_number.
+
+mov eax, number_msg
+call print_string
+call read_int
+mov [user_number], eax
+
+3. Validating the number
+
+The program checks whether the number is within the required range. The number must be greater than 50 and less than 100.
+
+cmp eax, 50
+jle show_error
+
+cmp eax, 100
+jge show_error
+
+The cmp instructions compare the number against the limits. The conditional jumps send the program to the error message if the number is 50 or below, or 100 or above.
+
+4. Printing the welcome message
+
+If the number is valid, the program starts a counter at zero and enters a loop.
+
+mov dword [counter], 0
+
+Each time the loop runs, the program prints Welcome, followed by the user's name. The counter increases by one after each message. The loop continues until the counter reaches the number entered by the user.
+
+inc dword [counter]
+
+mov eax, [counter]
+cmp eax, [user_number]
+jl welcome_loop
+
+This ensures that the welcome message is displayed the requested number of times.
+
+Testing
+
+The program was assembled and linked successfully using NASM and GCC. It was then run from the terminal to check its behaviour.
+
+Test	Input	Expected result
+Valid lower limit	51	Prints the welcome message 51 times
+Valid upper limit	99	Prints the welcome message 99 times
+Below the allowed range	50	Displays an error message
+Above the allowed range	100	Displays an error message
+
+![Task 2 valid input](task2_correct.png)
+![Task 2 invalid input](task2_incorrect.png)
+
+
 ## Files
 
 - `src/task1.asm` – Assembly program for Task 1.1.
